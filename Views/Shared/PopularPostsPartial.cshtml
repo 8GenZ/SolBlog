@@ -1,0 +1,26 @@
+﻿@model SolBlog.Models.BlogPost
+@using SolBlog.Enums;
+@using SolBlog.Services.Interfaces;
+@inject IImageService _ImageService;
+@inject IBlogService _BlogService;
+
+<div class="content-block post-medium mb--20">
+    <div class="post-thumbnail">
+        <a asp-action="Details" asp-controller="BlogPosts" asp-route-id="@Model?.Id">
+            <img src="@_ImageService.ConvertByteArrayToFile(Model?.ImageData, Model?.ImageType,DefaultImages.BlogPostImage)" alt="Post Images">
+        </a>
+    </div>
+    <div class="post-content">
+        <h6 class="title">
+            <a asp-action="Details" asp-controller="BlogPosts" asp-route-slug="@Model?.Slug">
+                @Model?.Title
+            </a>
+
+        </h6>
+        <div class="post-meta">
+            <ul class="post-meta-list">
+                <li>@Model?.Created</li>
+            </ul>
+        </div>
+    </div>
+</div>

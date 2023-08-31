@@ -1,0 +1,73 @@
+﻿@model IPagedList<SolBlog.Models.BlogPost>;
+@using SolBlog.Enums;
+@using SolBlog.Services;
+@using SolBlog.Services.Interfaces;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@inject IImageService _ImageService;
+@inject IBlogService _BlogService;
+
+@{
+    string? searchString = ViewBag.SearchString;
+    string? actionName = ViewBag.ActionName;
+
+}
+
+<div class="sidebar-inner">
+
+    <div class="axil-single-widget widget widget_categories mb--30">
+        <ul>
+            @foreach (Category category in await _BlogService.GetCategoriesAsync(4))
+            {
+                <partial name="sidebarCategoryPartial" model="category" />
+            }
+        </ul>
+    </div>
+
+
+    <!-- End Single Widget  -->
+    <!-- Start Single Widget  -->
+    <div class="axil-single-widget widget widget_search mb--30">
+        <h5 class="widget-title">Search</h5>
+        <form asp-action="SearchIndex" asp-controller="BlogPosts">
+            <div class="axil-search form-group">
+                <button type="submit" class="search-button"><i class="fal fa-search"></i></button>
+                <input type="text" class="form-control" placeholder="Search" name="searchstring">
+            </div>
+        </form>
+    </div>
+    <!-- End Single Widget  -->
+    <!-- Start Single Widget  -->
+    <div class="axil-single-widget widget widget_postlist mb--30">
+        <h5 class="widget-title">Popular Posts</h5>
+        <!-- Start Post List  -->
+        <div class="post-medium-block">
+
+            <!-- Start Single Post  -->
+            @foreach (BlogPost blogPost in await _BlogService.GetPopularBlogPostsAsync(3))
+            {
+                <partial name="PopularPostsPartial" model="blogPost" />
+            }
+
+
+        </div>
+        <!-- End Post List  -->
+
+    </div>
+    <!-- End Single Widget  -->
+    <!-- Start Single Widget  -->
+    <div class="axil-single-widget widget widget_social mb--30">
+        <h5 class="widget-title">Stay In Touch</h5>
+        <!-- Start Post List  -->
+        <ul class="social-icon md-size justify-content-center">
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-slack"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+        <!-- End Post List  -->
+    </div>
+    <!-- End Single Widget  -->
+</div>

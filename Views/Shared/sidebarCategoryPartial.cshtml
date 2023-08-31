@@ -1,0 +1,20 @@
+﻿@model SolBlog.Models.Category;
+@using SolBlog.Enums;
+@using SolBlog.Services.Interfaces;
+@inject IImageService _ImageService;
+<!-- Start Single Widget  -->
+
+<li class="cat-item">
+    
+        <a asp-action="Index" asp-controller="BlogPosts" asp-route-categoryId="@Model?.Id" class="inner">            
+            <div class="thumbnail">
+                <img src="@_ImageService.ConvertByteArrayToFile(Model?.ImageData, Model?.ImageType,DefaultImages.BlogPostImage)" alt="Post Images">
+            </div>
+            <div class="@Model.Description">
+                <h5 class="title">@Model.Name</h5>
+            </div>
+        </a>
+    
+</li>
+
+
