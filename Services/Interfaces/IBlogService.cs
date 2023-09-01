@@ -13,6 +13,8 @@ namespace SolBlog.Services.Interfaces
 
         public Task<IEnumerable<BlogPost>> GetBlogPostsAsync();
 
+        public Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync();
+
         public Task<BlogPost> GetBlogPostAsync(int? id);
 
         public Task<BlogPost> GetBlogPostAsync(string? slug);

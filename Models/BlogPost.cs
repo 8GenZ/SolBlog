@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SolBlog.Models
 {
@@ -61,10 +62,11 @@ namespace SolBlog.Models
         //Navigation Properties
         public int CategoryId { get; set; }
 
+        [JsonIgnore]
         public virtual Category? Category { get; set; }
-
+        [JsonIgnore]
          public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
-
+        [JsonIgnore]
          public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
     }
 }

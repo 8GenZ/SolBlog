@@ -70,6 +70,24 @@ namespace SolBlog.Services
             }
         }
 
+        public async Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync()
+        {
+            try
+            {
+
+                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.Include(b => b.Category)                                                                                        
+                                                                                        .Include(b => b.Comments)
+                                                                                        .ThenInclude(c => c.Author)
+                                                                                        .Include(b => b.Tags).ToListAsync();
+                return blogPosts;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<BlogPost> GetBlogPostAsync(int? id)
         {
             if (id == null) { return new BlogPost(); }
@@ -113,6 +131,7 @@ namespace SolBlog.Services
                 throw;
             }
         }
+
 
         public Task DeleteBlogPostAsync(int? id)
         {
