@@ -235,7 +235,7 @@ namespace SolBlog.Services
             {
                 IEnumerable<Category> categories = await _context.Categories.ToListAsync();
 
-                categories = categories.OrderBy(c => c.Name).Take(count!.Value);
+                categories = categories.OrderBy(c => c.Name).Take(count.Value);
 
                 return categories;
             }

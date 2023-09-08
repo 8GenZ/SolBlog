@@ -1,0 +1,42 @@
+﻿
+
+<h1 class="text-center display-1  mt-5 mb-5"> LET'S CHAT!</h1>
+<div class="container my-3 mb-5">
+    <form name="PortfolioContact" method="post" netlify>
+        <div class="row row-cols-1 container-contact  ">
+            <div class="col col-md-6">
+                <label for="FirstName" class="form-label">First Name</label>
+                <input class="form-control" name="FirstName" id="FirstName" type="text"
+                       placeholder="First Name" aria-label="First Name" required />
+            </div>
+            <div class="col col-md-6">
+                <label for="LastName" class="form-label">Last Name</label>
+                <input class="form-control" name="LastName" id="LastName" type="text"
+                       placeholder="Last Name" aria-label="Last Name" required />
+            </div>
+            <div class="col col-md-6">
+                <label for="Email" class="form-label">Email</label>
+                <input class="form-control" name="Email" id="Email" type="email" placeholder="Email"
+                       aria-label="Email" required />
+            </div>
+            <div class="col col-md-6">
+                <label for="Phone" class="form-label">Phone (optional)</label>
+                <input class="form-control" name="Phone" id="Phone" type="tel" placeholder="Phone"
+                       aria-label="Phone" />
+            </div>
+            <div class="col">
+                <label for="Subject" class="form-label">Subject</label>
+                <input class="form-control" name="Subject" id="Subject" type="text" placeholder="Subject"
+                       aria-label="Subject" required />
+            </div>
+            <div class="col">
+                <label for="Message" class="form-label">Message</label>
+                <textarea class="form-control" name="Message" id="Message" type="text" placeholder="Message"
+                          aria-label="Message" required rows="4"></textarea>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -29,7 +29,7 @@ namespace SolBlog.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Category> categories = await _blogService.GetCategoriesAsync();
+            IEnumerable<Category> categories = await _blogService.GetCategoriesAsync(5);
             return View(categories);
         }
 

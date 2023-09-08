@@ -46,9 +46,9 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12">
                         <div class="logo">
-                            <a href="index.html">
-                                <img class="dark-logo" src="~/assets/images/logo/logo-black.png" alt="Blogar logo">
-                                <img class="light-logo" src="~/assets/images/logo/logo-white2.png" alt="Blogar logo">
+                            <a asp-action="Index" asp-controller="BlogPosts">
+                                <img class="mark" height="70" src="~/img/mark (2).png" alt="Sol-Dev Mark">
+                                <img class="mark" height="70" src="~/img/mark (2).png" alt="Sol-Dev Mark">
                             </a>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a class="hover-flip-item-wrapper" asp-controller="BlogPosts" asp-action="Index">
+                                                    <a class="hover-flip-item-wrapper" asp-action="authorArea" asp-controller="BlogPosts" asp-action="Index">
                                                         <span class="hover-flip-item">
                                                             <span data-text="Manage Posts">Manage Posts</span>
                                                         </span>
@@ -219,7 +219,7 @@
                         <a asp-action="Index" asp-controller="Home">Home</a>
                     </li>
                     <li class="menu-item-has-children">
-                        <a href="#">Categories</a>
+                        <a asp-action="Index" asp-controller="Categories">Categories</a>
                         <ul class="axil-submenu">
                         </ul>
                     </li>
@@ -234,20 +234,23 @@
                         </ul>
                     </li>
                     <li><a href="404.html">404 Page</a></li>
-                    <li><a href="contact.html">Contact me</a></li>
+                    <li><a asp-controller="Home" asp-action="ContactMe">Contact me</a></li>
                 </ul>
             </div>
         </div>
-        <!-- End Mobile Menu Area  -->
-        @RenderBody()
 
+        <!-- End Mobile Menu Area  -->
+        <main class="bg-login-image mt-5 mb-5">            
+                @RenderBody()      
+        </main>
 
 
 
         <!-- Start Insta Partial Area  -->
-        <partial name="_InstaPartial" />
+       @* <partial name="_InstaPartial" />*@
         <!-- End Instagram Area  -->
         <!-- Start Footer Area  -->
+        <footer>
         <div class="axil-footer-area axil-footer-style-1 bg-color-white">
             <!-- Start Footer Top Area  -->
             <div class="footer-top">
@@ -331,6 +334,7 @@
             </div>
             <!-- End Copyright Area  -->
         </div>
+        </footer>
         <!-- End Footer Area  -->
         <!-- Start Back To Top  -->
         <a id="backto-top"></a>
