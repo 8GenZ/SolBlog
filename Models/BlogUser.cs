@@ -26,5 +26,7 @@ namespace SolBlog.Models
 
         //navigation properties
         public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+
+        
     }
 }

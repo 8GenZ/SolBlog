@@ -62,6 +62,9 @@ namespace SolBlog.Models
         //Navigation Properties
         public int CategoryId { get; set; }
 
+        //[JsonIgnore]
+        //public virtual Author? Author { get; set; }
+
         [JsonIgnore]
         public virtual Category? Category { get; set; }
         [JsonIgnore]

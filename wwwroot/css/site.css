@@ -77,11 +77,11 @@ body {
 
 .bg-login-image {
     background-image: url(/img/lenstravelier-obsBswnv7FI-unsplash.jpg) !important;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    backdrop-filter: brightness(0.65) blur(.1px)!important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
+    backdrop-filter: brightness(0.65) blur(.1px) !important;
 }
 
 .transparent-white-background {
@@ -90,10 +90,82 @@ body {
     border-style: solid;
     border-width: 2px;
     padding-top: 1rem;
-    padding-bottom:2rem;
+    padding-bottom: 2rem;
 }
 
-.mark{
-    height : 55px;
+.mark {
+    height: 55px;
+}
 
+.home-cover {
+    backdrop-filter: brightness(0.65) blur(.1px);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* ios code */
+    /* backdrop filter for Safari */
+    -webkit-backdrop-filter: brightness(0.65) blur(2px);
+    /* backdrop filter for other browsers */
+    backdrop-filter: brightness(0.95) blur(4px);
+}
+
+:root {
+    /* fonts */
+    --jg-main-title-font: 'Tomorrow', sans-serif;
+    --jg-title-font: 'Bebas Neue', sans-serif;
+    --jg-main-subtitle-font: 'Tomorrow', sans-serif;
+    --jg-subtitle-font: 'Fira Sans', sans-serif;
+    --jg-heading-font: 'Bebas Neue', sans-serif;
+    --jg-body-font: 'Roboto', sans-serif;
+    /* basic colors */
+    --jg-dark-color: #212121;
+    --jg-light-color: #deeefb;
+    --jg-background-color: rgba(250, 250, 250, 0.8);
+    /* text styles */
+    --jg-font-size: 1.2rem;
+    --jg-font-weight: 400;
+    --jg-line-height: 1.5rem;
+    --jg-title-color: var(--jg-dark-color);
+    /* my theme */
+    --jg-theme-core: #9d5734;
+    --jg-theme-100: hsl(20, 52%, 91%);
+    --jg-theme-150: hsl(20, 6%, 87%);
+    --jg-theme-200: hsl(20, 51%, 81%);
+    --jg-theme-300: hsl(20, 50%, 71%);
+    --jg-theme-400: hsl(20, 50%, 61%);
+    --jg-theme-500: hsl(20, 46%, 48%);
+    --jg-theme-600: hsl(20, 50%, 41%);
+    --jg-theme-700: hsl(20, 50%, 31%);
+    --jg-theme-800: hsl(20, 50%, 21%);
+    --jg-theme-850: hsl(20, 50%, 16%);
+    --jg-theme-900: hsl(20, 50%, 11%);
+}
+
+
+.login-buttons {
+    --bs-btn-bg: var(--jg-theme-500);
+    --bs-btn-border-color: var(--jg-theme-800);
+    --bs-btn-hover-bg: var(--jg-theme-700);
+    --bs-btn-hover-border-color: var(--jg-theme-800);
+    --bs-btn-active-bg: var(--jg-theme-800);
+    --bs-btn-active-border-color: var(--jg-theme-800);
+}
+
+.login-links {
+    color: var(--jg-theme-800);
+    text-decoration: none;
+}
+
+.login-links:hover {
+    color: var(--jg-theme-600)
+}
+
+.back-button {
+    position: absolute!important;
+    top: 25px !important;
+    left: 25px !important;
 }
