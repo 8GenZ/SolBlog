@@ -145,6 +145,10 @@ body {
     --jg-theme-900: hsl(20, 50%, 11%);
 }
 
+.thumbnail{
+    width:200px;
+    margin-right: 30px;
+}
 
 .login-buttons {
     --bs-btn-bg: var(--jg-theme-500);
@@ -168,4 +172,7 @@ body {
     position: absolute!important;
     top: 25px !important;
     left: 25px !important;
+}
+.custom-font {
+    font-family: 'Tomorrow', sans-serif;
 }

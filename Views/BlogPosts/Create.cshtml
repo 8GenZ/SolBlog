@@ -5,6 +5,13 @@
 @inject IImageService _ImageService;
 @inject IBlogService _BlogService;
 
+
+@{
+    Layout = "/Views/Shared/_CreatePartial.cshtml";
+    ViewData["Title"] = "Create";
+}
+
+
 <style>
     .ck-editor__editable_inline {
         min-height: 600px;
@@ -19,70 +26,76 @@
         font-size: 22px;
     }
 </style>
-<div class="post-single-wrapper axil-section-gap bg-color-white">
+<div class="post-single-wrapper axil-section-gap">
     <div class="container text-center">
-        <h1>Create</h1>
-        <h4>BlogPost</h4>
+        <h1 class="text-light">Create</h1>
+        <h4 class="text-light">BlogPost</h4>
     </div>
     <hr />
-    <main class="container mt-5">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row">
-                <div class="col-12 col-lg-4">
-                   <div class="form-group">
-                        <label asp-for="ImageFile" class="control-label">Blog Post Image</label>
+
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-12 col-lg-4 ">
+                <div class="transparent-white-background mb-3 border-1 border-rounded p-2">
+                    <div class="form-group ">
+                        <label asp-for="ImageFile" class="control-label text-dark ">Blog Post Image</label>
                         <img class="img-fluid border rounded-3 mb-2" style="max-height: 350px;" src="@_ImageService.ConvertByteArrayToFile(Model?.ImageData!,Model?.ImageType!,DefaultImages.BlogPostImage)" id="blogImage">
                         <input asp-for="ImageFile" type="file" class="form-control mt-3 pt-2" accept=".png,.jpg,.jpeg,.gif"
                                onchange="document.getElementById('blogImage').src = window.URL.createObjectURL(this.files[0])" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="Title" class="control-label"></label>
+                        <label asp-for="Title" class="control-label text-black"></label>
                         <input asp-for="Title" class="form-control" />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Abstract" class="control-label"></label>
+                        <label asp-for="Abstract" class="control-label text-black"></label>
                         <textarea asp-for="Abstract" class="form-control" rows="1"></textarea>
                         <span asp-validation-for="Abstract" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="CategoryId" class="control-label">Category</label>
+                        <label asp-for="CategoryId" class="control-label text-black">Category</label>
                         <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
                     </div>
                 </div>
-                <div class="col-12 col-lg-8">
-                    <div class="form-group">
-                        <label asp-for="Content" class="control-label"></label>
-                        <textarea asp-for="Content" class="editor form-control"></textarea>
-                        <span asp-validation-for="Content" class="text-danger"></span>
-                    </div>
-                    <div class="form-group" id="tagContainer">
-                        <label asp-for="Tags"></label>
-                        <input class="form-control" type="text" id="tagInput" name="StringTags" autocomplete="off" />
-                        <div class="tagcloud axil-single-widget mt-2" style="display: none;">
-                            <!-- tags go here -->
-                                @foreach(Tag tag in await _BlogService.GetTagsAsync())
-                                {
-                                    <a role="button">@tag.Name</a>                                    
-                                }
-                        </div>
+
+            </div>
+            <div class="col-12 col-lg-8 transparent-white-background">
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label text-black"></label>
+                    <textarea asp-for="Content" class="editor form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group" id="tagContainer">
+                    <label asp-for="Tags" class="text-black" ></label>
+                    <input class="form-control" type="text" id="tagInput" name="StringTags" autocomplete="off" />
+                    <div class="tagcloud axil-single-widget mt-2" style="display: none;">
+                        <!-- tags go here -->
+                        @foreach (Tag tag in await _BlogService.GetTagsAsync())
+                        {
+                            <a class="text-black" role="button">@tag.Name</a>
+                        }
                     </div>
                 </div>
             </div>
-            <div class="form-group d-flex justify-content-end">
-                <label class="form-check-label me-4 mt-2" asp-for="IsPublished">Publish?</label>
+        </div>
+        <div class="form-group d-flex justify-content-end ">
+            <div class="transparent-white-background mt-3 p-3 border-1 border-rounded">
+                <label class="form-check-label me-4 text-black" asp-for="IsPublished">Publish?</label>
                 <input class="largerCheckbox me-8" type="checkbox" asp-for="IsPublished" />
                 <span asp-validation-for="IsPublished" class="text-danger"></span>
+
             </div>
-            <div class="form-group d-flex justify-content-end">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-        <div class="form-group mt-5 start-0">
-            <a asp-action="Index">Back</a>
         </div>
-    </main>
+        <div class="form-group d-flex justify-content-end">
+            <input type="submit" value="Create" class="btn login-buttons" />
+        </div>
+    </form>
+    <div class="form-group mt-5 start-0">
+        <a asp-action="Index">Back</a>
+    </div>
+
 </div>
 
 @section Scripts {
@@ -108,22 +121,22 @@
         };
 
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             //add an event listener on the tag input to show the tagcloud
 
-            $('#tagInput').focus(function(){
+            $('#tagInput').focus(function () {
                 $('.tagcloud').show(300);
             });
 
             // add an event listener to HIDE the tag cloud when im not in the tag input
 
-            $('form * :not("#tagInput")').focus(function(){
-                if ( $('.tagcloud').is(':visible') ) {
+            $('form * :not("#tagInput")').focus(function () {
+                if ($('.tagcloud').is(':visible')) {
                     $('.tagcloud').hide(300);
                 }
             });
 
-            $('#tagInput').keyup(function (){                                
+            $('#tagInput').keyup(function () {
                 //Get just the text from the input after the last comma
                 let inputTags = $(this).val().split(',');
                 let searchString = inputTags.pop().trim();
@@ -136,24 +149,24 @@
 
                 inputTags.forEach(tag => {
 
-                    if(tag.trim == ''){ return;}
+                    if (tag.trim == '') { return; }
 
                     let matchingTags = $('.tagcloud > a:contains(' + tag.trim() + ')');
 
-                    matchingTags.each(function(){
-                    if ($(this).text().trim().toLowerCase() == tag.trim().toLowerCase()){
-                        $(this).addClass('disabledTag');
-                    }
-                        
+                    matchingTags.each(function () {
+                        if ($(this).text().trim().toLowerCase() == tag.trim().toLowerCase()) {
+                            $(this).addClass('disabledTag');
+                        }
+
                     });
 
 
                 });
             });
 
-            $('.tagcloud > a').click(function(){
+            $('.tagcloud > a').click(function () {
                 //if its disabled then do nothing
-                if ($(this).hasClass('disabledTag')){
+                if ($(this).hasClass('disabledTag')) {
                     $('#tagInput').focus();
                     return;
                 }

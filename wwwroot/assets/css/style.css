@@ -487,7 +487,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: var(--font-primary);
-  color: var(--color-body);
+  color: var(--color-midgray);
   font-weight: var(--p-regular);
 }
 
@@ -1107,7 +1107,7 @@ font-family: 'Red Hat Display', sans-serif;
 }
 
 .bg-color-white {
-  background: #FFFFFF;
+ background: #FFFFFF;
 }
 
 .bg-color-black {
