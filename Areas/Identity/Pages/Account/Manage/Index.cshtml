@@ -37,7 +37,7 @@
     <div class="col-md-6">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-floating">
-            <img id="userImage" class="img-fluid img-thumbnail rounded" src="@_ImageService.ConvertByteArrayToFile(Model.Input.ImageData,Model.Input.ImageType,DefaultImages.UserImage)" />
+            <img id="userImage" class="img-fluid img-thumbnail rounded" src="@_ImageService.ConvertByteArrayToFile(Model?.Input!.ImageData!,Model?.Input.ImageType,DefaultImages.UserImage)" />
 
             <input type="file" asp-for="Input.ImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif,.tif"
                    style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
