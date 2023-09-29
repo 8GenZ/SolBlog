@@ -18,9 +18,9 @@
                     <nav class="mainmenu-nav">
                         <!-- Start Mainmanu Nav -->
                         <ul class="mainmenu">
-                            <li class="menu-item-has-children">
+@*                            <li class="menu-item-has-children">
                                 <a asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
+                            </li>*@
                             <li class="menu-item-has-children">
                                 <a href="#">Posts</a>
                                 <ul class="axil-submenu">
@@ -47,7 +47,7 @@
                                     </li>*@
                                 </ul>
                             </li>
-                            <li><a asp-action="ContactMe" asp-controller="Home">Contact Me</a></li>
+                            @*<li><a asp-action="ContactMe" asp-controller="Home">Contact Me</a></li>*@
 
                             @if (User.IsInRole("Admin"))
                             {
