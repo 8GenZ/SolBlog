@@ -60,7 +60,9 @@ namespace SolBlog.Services
                                                                                         .Where(b => b.IsPublished == true && b.IsDeleted == false)
                                                                                         .Include(b => b.Comments)
                                                                                         .ThenInclude(c => c.Author)
-                                                                                        .Include(b => b.Tags).ToListAsync();
+                                                                                        .Include(b => b.Tags)
+                                                                                        .OrderByDescending(b => b.Created)
+                                                                                        .ToListAsync();
                 return blogPosts;
             }
             catch (Exception)
@@ -75,11 +77,14 @@ namespace SolBlog.Services
             try
             {
 
-                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.Include(b => b.Category)                                                                                        
+                IEnumerable<BlogPost> blogPosts = await _context.BlogPosts.Include(b => b.Category)
                                                                                         .Include(b => b.Comments)
                                                                                         .ThenInclude(c => c.Author)
-                                                                                        .Include(b => b.Tags).ToListAsync();
+                                                                                            .OrderByDescending(b => b.Created)
+                                                                                            .ToListAsync();               
+
                 return blogPosts;
+
             }
             catch (Exception)
             {
@@ -120,7 +125,7 @@ namespace SolBlog.Services
                 .Include(b => b.Category)
                 .Include(b => b.Comments)
                 .ThenInclude(c => c.Author)
-                .Include(b=> b.Tags)
+                .Include(b => b.Tags)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
                 return blogPost!;
@@ -151,7 +156,7 @@ namespace SolBlog.Services
                 }
                 else
                 {
-                    blogPosts = await _context.BlogPosts.Where(b => b.CategoryId == categoryId ) 
+                    blogPosts = await _context.BlogPosts.Where(b => b.CategoryId == categoryId)
                                          .Include(b => b.Category)
                                          .Include(b => b.Tags)
                                          .Include(b => b.Comments)
@@ -306,7 +311,7 @@ namespace SolBlog.Services
 
                 foreach (string tagName in tags)
                 {
-                    if(string.IsNullOrEmpty(tagName.Trim()))  continue; 
+                    if (string.IsNullOrEmpty(tagName.Trim())) continue;
 
                     Tag? tag = await _context.Tags.FirstOrDefaultAsync(t => t.Name!.Trim().ToLower() == tagName.Trim().ToLower());
 
