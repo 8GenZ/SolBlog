@@ -12,10 +12,10 @@
 }
 
 
-<style>
-    .ck-editor__editable_inline {
+ <style>
+/*      .ck-editor__editable_inline {
         min-height: 600px;
-    }
+    } */
 
     input.largerCheckbox {
         width: 30px;
@@ -25,7 +25,7 @@
     label.form-check-label {
         font-size: 22px;
     }
-</style>
+</style> 
 <div class="post-single-wrapper axil-section-gap">
     <div class="container text-center">
         <h1 class="text-light">Create</h1>
@@ -63,8 +63,8 @@
             </div>
             <div class="col-12 col-lg-8 transparent-white-background">
                 <div class="form-group">
-                    <label asp-for="Content" class="control-label text-black"></label>
-                    <textarea asp-for="Content" class="editor form-control"></textarea>
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" id="content" class="form-control"></textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <div class="form-group" id="tagContainer">
@@ -102,7 +102,29 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <!--CK Editor-->
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#content',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image imageupload media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap codesample | removeformat |',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ],
+            codesample_languages: [
+                { text: 'HTML/XML', value: 'markup' },
+                { text: 'JavaScript', value: 'javascript' },
+                { text: 'CSS', value: 'css' },
+                { text: 'C#', value: 'csharp' },
+            ],
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+
+    </script>
+@*     <!--CK Editor-->
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
@@ -112,7 +134,8 @@
             .then(editor => {
                 window.editor = editor;
             });
-    </script>
+    </script> *@
+
     <script>
         // override the jQuery ":contains" selector to make it case insensitive
         jQuery.expr[':'].contains = function (a, i, m) {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Microsoft.EntityFrameworkCore;
 using SolBlog.Data;
 using SolBlog.Models;
@@ -31,6 +32,22 @@ namespace SolBlog.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AuthorApply()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AuthorApply(int? id)
+        {
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {

@@ -22,6 +22,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@100;200&display=swap" rel="stylesheet">
+
+    <!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/ucqzpmpwmqslx36vd3od080p58srtac0rerc89bbfedkzpmg/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body data-theme="dark" class="setColor dark">
     <partial name="_LogoutPartial" />
@@ -67,6 +70,13 @@
                                         <ul class="axil-submenu">
                                             <li>
                                                 <a class="hover-flip-item-wrapper" asp-action="Index" asp-controller="BlogPosts">
+                                                    <span class="">
+                                                        <span>All Posts</span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="hover-flip-item-wrapper" asp-action="AuthorApply" asp-controller="Home">
                                                     <span class="">
                                                         <span>All Posts</span>
                                                     </span>
@@ -372,6 +382,7 @@
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         });
     </script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
