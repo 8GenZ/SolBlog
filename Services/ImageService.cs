@@ -9,7 +9,8 @@ namespace SolBlog.Services
         private readonly string? _defaultBlogImage = "/img/DefaultBlogImage.jpg";
         private readonly string? _defaultUserImage = "/img/DefaultUserImage.png";
         private readonly string? _defaultCategoryImage = "/img/DefaultCategoryImage.png";
-        private readonly string? _authorImage = "/img/SOL-BLOG.png";
+        private readonly string? _authorImage = "/img/Author-Image.png";
+        private readonly string? _blogImage = "/img/SOL-BLOG.png";
         public string? ConvertByteArrayToFile(byte[]? fileData, string? extension, DefaultImages defaultImage)
         {
 
@@ -23,6 +24,7 @@ namespace SolBlog.Services
                         case DefaultImages.BlogPostImage: return _defaultBlogImage;
                         case DefaultImages.UserImage: return _defaultUserImage;
                         case DefaultImages.CategoryImage: return _defaultCategoryImage;
+                        case DefaultImages.BlogImage: return _blogImage;
                     }
                     return _defaultUserImage;
                 }
