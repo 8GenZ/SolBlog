@@ -114,11 +114,9 @@ namespace SolBlog.Controllers
         [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> Create()
-        {
-            string userId = _userManager.GetUserId(User)!;
+        {           
           
-
-            List<Category> categories = await _context.Categories.ToListAsync();
+            List<Category> categories = await _blogService.GetCategoriesAsync();
 
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
            
@@ -184,7 +182,8 @@ namespace SolBlog.Controllers
                 return NotFound();
             }
 
-            var blogPost = await _context.BlogPosts.FindAsync(id);
+            var blogPost = await _blogService.GetBlogPostAsync(id);
+
             if (blogPost == null)
             {
                 return NotFound();
@@ -330,7 +329,6 @@ namespace SolBlog.Controllers
 
             return RedirectToAction(nameof(AuthorArea));
         }
-
 
         private bool BlogPostExists(int id)
         {

@@ -17,8 +17,7 @@ namespace SolBlog.Services
         {
             _context = context;
         }
-
-
+        #region BlogPost
         public async Task AddBlogPostAsync(BlogPost? blogPost)
         {
             if (blogPost == null) { return; }
@@ -34,7 +33,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
         public async Task UpdateBlogPostAsync(BlogPost? blogPost)
         {
             if (blogPost == null) { return; }
@@ -49,8 +47,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
-
         public async Task<IEnumerable<BlogPost>> GetBlogPostsAsync()
         {
             try
@@ -71,7 +67,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
         public async Task<IEnumerable<BlogPost>> GetAllBlogPostsAsync()
         {
             try
@@ -92,7 +87,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
         public async Task<BlogPost> GetBlogPostAsync(int? id)
         {
             if (id == null) { return new BlogPost(); }
@@ -113,8 +107,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
-
         public async Task<BlogPost> GetBlogPostAsync(string? slug)
         {
             if (string.IsNullOrEmpty(slug)) { return new BlogPost(); }
@@ -136,13 +128,10 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
-
         public Task DeleteBlogPostAsync(int? id)
         {
             throw new NotImplementedException();
         }
-
         public async Task<IEnumerable<BlogPost>> GetBlogPostsByCategoryAsync(int? categoryId)
         {
             try
@@ -173,8 +162,24 @@ namespace SolBlog.Services
                 throw;
             }
         }
+        public async Task RemoveAllBlogPostTagsAsync(int? blogPostId)
+        {
+            try
+            {
+                BlogPost? blogPost = await _context.BlogPosts.Include(b => b.Tags).FirstOrDefaultAsync(b => b.Id == blogPostId);
 
-        #region Search Blog Post
+                if (blogPost != null)
+                {
+                    blogPost.Tags.Clear();
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public IEnumerable<BlogPost> SearchBlogPosts(string? searchstring)
         {
             try
@@ -213,46 +218,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-        #endregion
-
-        public async Task RemoveAllBlogPostTagsAsync(int? blogPostId)
-        {
-            try
-            {
-                BlogPost? blogPost = await _context.BlogPosts.Include(b => b.Tags).FirstOrDefaultAsync(b => b.Id == blogPostId);
-
-                if (blogPost != null)
-                {
-                    blogPost.Tags.Clear();
-                    await _context.SaveChangesAsync();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public async Task<IEnumerable<Category>> GetCategoriesAsync(int? count = null)
-        {
-            try
-            {
-                IEnumerable<Category> categories = await _context.Categories.ToListAsync();
-
-                categories = categories.OrderBy(c => c.Name).Take(count.Value);
-
-                return categories;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-
         public async Task<IEnumerable<BlogPost>> GetPopularBlogPostsAsync(int? count = null)
         {
             try
@@ -282,7 +247,43 @@ namespace SolBlog.Services
                 throw;
             }
         }
+        #endregion
 
+        #region Category
+        public async Task<IEnumerable<Category>> GetSortedCategoriesAsync(int? count = null)
+        {
+            try
+            {
+                IEnumerable<Category> categories = await _context.Categories.ToListAsync();
+
+                categories = categories.OrderBy(c => c.Name).Take(count.Value);
+
+                return categories;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public async Task<List<Category>> GetCategoriesAsync(int? count = null)
+        {
+            try
+            {
+                List<Category> categories = await _context.Categories.ToListAsync();
+
+                return categories;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
+
+        #region Tags
         public async Task<IEnumerable<Tag>> GetTagsAsync()
         {
             try
@@ -296,7 +297,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
         public async Task AddTagsToBlogPostAsync(IEnumerable<string>? tags, int? blogPostId)
         {
             if (blogPostId == null || tags == null) { return; }
@@ -335,7 +335,6 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
         public async Task<bool> IsTagOnBlogPostAsync(int? tagId, int? blogPostId)
         {
             if (tagId == null || blogPostId == null) { return false; }
@@ -358,7 +357,7 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
+        #endregion
 
         public async Task<bool> ValidSlugAsync(string? title, int? blogPostId)
         {
@@ -389,6 +388,13 @@ namespace SolBlog.Services
                 throw;
             }
         }
+
+
+
+
+
+
+
 
 
     }
