@@ -23,6 +23,9 @@ namespace SolBlog.Services.Interfaces
         #region Category
         public Task<IEnumerable<Category>> GetSortedCategoriesAsync(int? count = null);
         public Task<List<Category>> GetCategoriesAsync(int? count = null);
+        public Task<Category> GetCategoryAsync(int? id);
+        public Task AddCategoryAsync(Category? category);
+        public Task DeleteCategoryAsync(int? id);
 
         #endregion
 

@@ -4,6 +4,7 @@ using SolBlog.Data;
 using SolBlog.Models;
 using SolBlog.Services.Interfaces;
 using System.Collections;
+using System.ComponentModel;
 using System.Drawing.Text;
 
 namespace SolBlog.Services
@@ -267,7 +268,6 @@ namespace SolBlog.Services
             }
 
         }
-
         public async Task<List<Category>> GetCategoriesAsync(int? count = null)
         {
             try
@@ -281,9 +281,48 @@ namespace SolBlog.Services
                 throw;
             }
         }
+        public async Task<Category> GetCategoryAsync(int? id)
+        {
+            if (id == null) { return new Category(); }
+            try
+            {
+                Category category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+                return category!;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task AddCategoryAsync(Category? category)
+        {
+            try
+            {
+                _context.Add(category);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async Task DeleteCategoryAsync(int? id)
+        {
+            var category = await _context.Categories.FindAsync(id);
+            try
+            {
+                _context.Remove(category);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #endregion
 
-        #region Tags
+            #region Tags
         public async Task<IEnumerable<Tag>> GetTagsAsync()
         {
             try

@@ -26,23 +26,21 @@ namespace SolBlog.Controllers
             _imageService = imageService;
         }
 
-        // GET: Categories
         public async Task<IActionResult> Index()
         {
             IEnumerable<Category> categories = await _blogService.GetCategoriesAsync(5);
             return View(categories);
         }
 
-        // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _blogService.GetCategoryAsync(id);
+
             if (category == null)
             {
                 return NotFound();
@@ -51,15 +49,11 @@ namespace SolBlog.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageFile")] Category category)
@@ -71,17 +65,13 @@ namespace SolBlog.Controllers
                     category.ImageData = await _imageService.ConvertFileToByteArrayAsync(category.ImageFile);
                     category.ImageType = category.ImageFile.ContentType;
                 }
-                _context.Add(category);
-                await _context.SaveChangesAsync();
+                await _blogService.AddCategoryAsync(category);
                 return RedirectToAction(nameof(Index));
-
             }
-
 
             return View(category);
         }
 
-        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Categories == null)
@@ -89,7 +79,8 @@ namespace SolBlog.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _blogService.GetCategoryAsync(id);
+
             if (category == null)
             {
                 return NotFound();
@@ -97,9 +88,6 @@ namespace SolBlog.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageFile")] Category category)
@@ -118,8 +106,7 @@ namespace SolBlog.Controllers
                         category.ImageData = await _imageService.ConvertFileToByteArrayAsync(category.ImageFile);
                         category.ImageType = category.ImageFile.ContentType;
                     }
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
+                    await _blogService.AddCategoryAsync(category);
                 }
                 catch (Exception)
                 {
@@ -137,16 +124,15 @@ namespace SolBlog.Controllers
             return View(category);
         }
 
-        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _blogService.GetCategoryAsync(id);
+
             if (category == null)
             {
                 return NotFound();
@@ -155,22 +141,12 @@ namespace SolBlog.Controllers
             return View(category);
         }
 
-        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
-            }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-            }
+            await _blogService.DeleteCategoryAsync(id);
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
