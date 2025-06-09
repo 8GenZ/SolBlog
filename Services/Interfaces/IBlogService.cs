@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using SolBlog.Models;
 
 namespace SolBlog.Services.Interfaces
@@ -18,6 +19,7 @@ namespace SolBlog.Services.Interfaces
         public Task<IEnumerable<BlogPost>> GetPopularBlogPostsAsync(int? count = null);
         public Task<IEnumerable<BlogPost>> GetBlogPostsByCategoryAsync(int? categoryId);
         public IEnumerable<BlogPost> SearchBlogPosts(string? searchstring);
+        public Task<bool> ValidSlugAsync(string? title, int? blogPostId);
         #endregion
 
         #region Category
@@ -26,18 +28,18 @@ namespace SolBlog.Services.Interfaces
         public Task<Category> GetCategoryAsync(int? id);
         public Task AddCategoryAsync(Category? category);
         public Task DeleteCategoryAsync(int? id);
-
         #endregion
 
+        #region Tags
         public Task<IEnumerable<Tag>> GetTagsAsync();
         public Task AddTagsToBlogPostAsync(IEnumerable<string>? tags, int? blogPostId);
         public Task RemoveAllBlogPostTagsAsync(int? blogPostId);
         public Task<bool> IsTagOnBlogPostAsync(int? tagId, int? blogPostId);
-        public Task<bool> ValidSlugAsync(string? title, int? blogPostId);
+        #endregion
 
-
-
-
+        #region Comments
+        public Task<IIncludableQueryable<Comment, BlogPost?>?> GetCommentsIndexAsync();
+        #endregion 
 
     }
 }

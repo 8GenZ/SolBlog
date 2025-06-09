@@ -1,5 +1,6 @@
 ﻿using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using SolBlog.Data;
 using SolBlog.Models;
 using SolBlog.Services.Interfaces;
@@ -248,6 +249,35 @@ namespace SolBlog.Services
                 throw;
             }
         }
+        public async Task<bool> ValidSlugAsync(string? title, int? blogPostId)
+        {
+            try
+            {
+                //NewPost
+                if (blogPostId == null || blogPostId == 0)
+                {
+                    return !await _context.BlogPosts.AnyAsync(b => b.Slug == title);
+                }
+                else
+                {
+                    BlogPost? blogPost = await _context.BlogPosts.AsNoTracking().FirstOrDefaultAsync(b => b.Id == blogPostId);
+
+                    string? oldSlug = blogPost?.Slug;
+
+                    if (!string.Equals(oldSlug, title))
+                    {
+                        return !await _context.BlogPosts.AnyAsync(b => b.Id != blogPost!.Id && b.Slug == title);
+                    }
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
 
         #region Category
@@ -319,10 +349,9 @@ namespace SolBlog.Services
                 throw;
             }
         }
-
         #endregion
 
-            #region Tags
+        #region Tags
         public async Task<IEnumerable<Tag>> GetTagsAsync()
         {
             try
@@ -398,37 +427,21 @@ namespace SolBlog.Services
         }
         #endregion
 
-        public async Task<bool> ValidSlugAsync(string? title, int? blogPostId)
+        #region Comments
+        public async Task<IIncludableQueryable<Comment, BlogPost?>?> GetCommentsIndexAsync()
         {
             try
             {
-                //NewPost
-                if (blogPostId == null || blogPostId == 0)
-                {
-                    return !await _context.BlogPosts.AnyAsync(b => b.Slug == title);
-                }
-                else
-                {
-                    BlogPost? blogPost = await _context.BlogPosts.AsNoTracking().FirstOrDefaultAsync(b => b.Id == blogPostId);
-
-                    string? oldSlug = blogPost?.Slug;
-
-                    if (!string.Equals(oldSlug, title))
-                    {
-                        return !await _context.BlogPosts.AnyAsync(b => b.Id != blogPost!.Id && b.Slug == title);
-                    }
-
-                }
-                return true;
+                var comments = _context.Comments.Include(c => c.BlogPost).Include(c => c.Author);
+                return (IIncludableQueryable<Comment, BlogPost?>?)comments;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-
+        #endregion
 
 
 

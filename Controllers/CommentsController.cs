@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SolBlog.Data;
 using SolBlog.Models;
+using SolBlog.Services.Interfaces;
 
 
 namespace SolBlog.Controllers
@@ -18,19 +19,20 @@ namespace SolBlog.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly IBlogService _blogService;
 
-        public CommentsController(ApplicationDbContext context, UserManager<BlogUser> userManager)
+        public CommentsController(ApplicationDbContext context, UserManager<BlogUser> userManager, IBlogService blogService )
         {
             _context = context;
             _userManager = userManager;
-
+            _blogService = blogService;
         }
 
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Comments.Include(c => c.Author).Include(c => c.BlogPost);
-            return View(await applicationDbContext.ToListAsync());
+            var commentsIndex = _blogService.GetCommentsIndexAsync();
+            return View(commentsIndex);
         }
 
         // GET: Comments/Details/5
